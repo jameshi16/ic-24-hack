@@ -6,6 +6,7 @@ import UserIcon from '@heroicons/react/24/solid/UserIcon';
 import UserPlusIcon from '@heroicons/react/24/solid/UserPlusIcon';
 import UsersIcon from '@heroicons/react/24/solid/UsersIcon';
 import XCircleIcon from '@heroicons/react/24/solid/XCircleIcon';
+import CalendarIcon from '@heroicons/react/24/solid/CalendarIcon';
 import { SvgIcon } from '@mui/material';
 
 export const items = [
@@ -69,6 +70,15 @@ export const items = [
     icon: (
       <SvgIcon fontSize="small">
         <UserPlusIcon />
+      </SvgIcon>
+    )
+  },
+  {
+    title: 'Schedule',
+    path: '/schedule',
+    icon: (
+      <SvgIcon fontSize="small">
+        <CalendarIcon />
       </SvgIcon>
     )
   },
