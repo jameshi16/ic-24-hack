@@ -8,22 +8,17 @@ import { Scheduler } from '@aldabil/react-scheduler';
 import { generateColorHex } from 'src/utils/color-generator'
 import { Stack, Typography } from '@mui/material';
 import { MetricCard } from 'src/components/metric-card';
+import { useAppStore, useAppSelector } from 'src/hooks/use-store';
 
 const Page = () => {
-  const mockData = [
-    {
-      id: 'sub-unit-1',
-      name: 'Sub Unit 1'
-    },
-    {
-      id: 'sub-unit-2',
-      name: 'Sub Unit 2'
-    }
-  ];
+  const units = useAppSelector(state => state.units);
+
   const [unit, setUnit] = useState(null);
   useEffect(() => {
-    setUnit(mockData[0]);
-  }, []);
+    if (units.length > 0) {
+      setUnit(units[0]);
+    }
+  }, [units]);
 
   return (
     <>
@@ -46,12 +41,10 @@ const Page = () => {
                 Schedule
               </Typography>
               <Select label="Metric" onChange={event => {
-                console.log(mockData.find(data => event.target.value === data.id));
-                setUnit(mockData.find(data => event.target.value === data.id));
-              }
-              }>
+                setUnit(units.find(data => event.target.value === data.id));
+              }} value={unit ? unit.id : null}>
                 {
-                  mockData.map(val => (
+                  units.map(val => (
                     <MenuItem value={val.id}>{val.name}</MenuItem>
                   ))
                 }
@@ -63,7 +56,7 @@ const Page = () => {
               events={[
                 {
                   event_id: 1,
-                  title: "Person1 ",
+                  title: "Person 1",
                   start: new Date("2024/2/3 09:30"),
                   end: new Date("2024/2/3 10:30"),
                   color: generateColorHex()
