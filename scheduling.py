@@ -21,27 +21,27 @@ class Schedule:
         self.slot_length = slot_length
         self.total_interval = total_interval
 
-    def make_schedule(self):
-        # sort soldiers by optimum time
-        self.soldiers.sort(key=lambda x: x.optimum_time)
-        # split total_interval into slots (by shift_length)
-        slots = []
-        for i in range(int(self.total_interval) self.slot_length)):
-            slots.append(i + (1/2) * self.slot_length)
-        # while soldiers, loop over slots (use central time of slot), add agent w closest optimum_time to slot
-        schedule = [[] * len(slots)]
-        break_loop = False
-        while not break_loop:
-            for s in slots:
-                if not self.soldiers:
-                    break_loop = True
-                    break
-                soldier_index = np.argmin(np.array(self.soldiers), key=lambda x: abs(s - x.optimum_time))
-                schedule[s - (1/2) * self.slot_length].append(self.soldiers.pop(soldier_index))
+    # def make_schedule0(self):
+    #     # sort soldiers by optimum time
+    #     self.soldiers.sort(key=lambda x: x.optimum_time)
+    #     # split total_interval into slots (by shift_length)
+    #     slots = []
+    #     for i in range(int(self.total_interval) self.slot_length)):
+    #         slots.append(i + (1/2) * self.slot_length)
+    #     # while soldiers, loop over slots (use central time of slot), add agent w closest optimum_time to slot
+    #     schedule = [[] * len(slots)]
+    #     break_loop = False
+    #     while not break_loop:
+    #         for s in slots:
+    #             if not self.soldiers:
+    #                 break_loop = True
+    #                 break
+    #             soldier_index = np.argmin(np.array(self.soldiers), key=lambda x: abs(s - x.optimum_time))
+    #             schedule[s - (1/2) * self.slot_length].append(self.soldiers.pop(soldier_index))
                 
 
-        # return slots (each slot has list of soldiers)
-        return schedule
+    #     # return slots (each slot has list of soldiers)
+    #     return schedule
     
 
     # db_caller for data
@@ -50,16 +50,16 @@ class Schedule:
         return idx in soft_limit[:10]
         
     def get_optimum_time():
-        
+        pass
     
     def make_schedule0(self):
         optimum_time = self.get_optimum_time()
         sorted_optimum = np.argsort(optimum_time)
         schedule = []
         for i in range(int(self.total_interval/self.slot_length)):
-            time = (slot_length * i) % 24 
+            time = (self.slot_length * i) % 24 
             count = 0
-            while not check_match(self.soldier[-(time % len(self.agent))]):
+            while not self.check_match(self.soldier[-(time % len(self.agent))]):
                 count += 1
                 time += count
                 count += 1
