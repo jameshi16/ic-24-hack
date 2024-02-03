@@ -5,7 +5,7 @@ import { subDays, subHours } from 'date-fns';
 import { MenuItem, Select, Box, Container, Unstable_Grid2 as Grid } from '@mui/material';
 import { Layout as DashboardLayout } from 'src/layouts/dashboard/layout';
 import { Scheduler } from '@aldabil/react-scheduler';
-import { generateColorHex } from 'src/utils/color-generator'
+import { generateColorHex } from 'src/utils/color-generator';
 import { Stack, Typography } from '@mui/material';
 import { MetricCard } from 'src/components/metric-card';
 import { useAppStore, useAppSelector } from 'src/hooks/use-store';
@@ -53,22 +53,7 @@ const Page = () => {
             <Scheduler
               view="day"
               customViewer={(event, close) => <MetricCard event={event} close={close} />}
-              events={[
-                {
-                  event_id: 1,
-                  title: "Person 1",
-                  start: new Date("2024/2/3 09:30"),
-                  end: new Date("2024/2/3 10:30"),
-                  color: generateColorHex()
-                },
-                {
-                  event_id: 2,
-                  title: "Person 2",
-                  start: new Date("2024/2/3 10:00"),
-                  end: new Date("2024/2/3 11:00"),
-                  color: generateColorHex()
-                },
-              ]}
+              events={unit ? unit.events.map(x => x) : []}
             />
           </Stack>
         </Container>
