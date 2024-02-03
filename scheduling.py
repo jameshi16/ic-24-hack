@@ -26,7 +26,7 @@ class Schedule:
         self.soldiers.sort(key=lambda x: x.optimum_time)
         # split total_interval into slots (by shift_length)
         slots = []
-        for i in range(int(self.total_interval/self.slot_length)):
+        for i in range(int(self.total_interval) self.slot_length)):
             slots.append(i + (1/2) * self.slot_length)
         # while soldiers, loop over slots (use central time of slot), add agent w closest optimum_time to slot
         schedule = [[] * len(slots)]
@@ -36,11 +36,13 @@ class Schedule:
                 if not self.soldiers:
                     break_loop = True
                     break
-                
+                soldier_index = np.argmin(np.array(self.soldiers), key=lambda x: abs(s - x.optimum_time))
+                schedule[s - (1/2) * self.slot_length].append(self.soldiers.pop(soldier_index))
                 
 
         # return slots (each slot has list of soldiers)
-
+        return schedule
+    
 
     # db_caller for data
     # intensity of sleep
@@ -56,8 +58,14 @@ class Schedule:
         schedule = []
         for i in range(int(self.total_interval/self.slot_length)):
             time = (slot_length * i) % 24 
-            if check_match
-            schedule.append(self.agent)
+            count = 0
+            while not check_match(self.soldier[-(time % len(self.agent))]):
+                count += 1
+                time += count
+                count += 1
+                time -= count
+                # oscillator for in front behind which makes hard constraint on number of days
+            schedule.append(self.soldier[-(time % len(self.agent))])
     # soft constraints: sleep schedule peak times, same no of shifts across the board, i.e. uniformly distributed
     # things to think about: combination for metrics, make sure as much time is covered as possible
     
