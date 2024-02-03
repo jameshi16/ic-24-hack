@@ -54,7 +54,7 @@ export const SideNav = (props) => {
           >
             <Logo />
           </Box>
-          <Box
+          {/* <Box
             sx={{
               alignItems: 'center',
               backgroundColor: 'rgba(255, 255, 255, 0.04)',
@@ -86,7 +86,7 @@ export const SideNav = (props) => {
             >
               <ChevronUpDownIcon />
             </SvgIcon>
-          </Box>
+          </Box> */}
         </Box>
         <Divider sx={{ borderColor: 'neutral.700' }} />
         <Box
@@ -108,6 +108,7 @@ export const SideNav = (props) => {
           >
             {items.map((item) => {
               const active = item.path ? (pathname === item.path) : false;
+
 
               return (
                 <SideNavItem
@@ -132,47 +133,16 @@ export const SideNav = (props) => {
         >
           <Typography
             color="neutral.100"
+            // make the color grey 
+            // color="neutral.400"
             variant="subtitle2"
+            fontStyle={'italic'}
+
           >
-            Need more features?
+            Powered by Next-Gen AI
           </Typography>
-          <Typography
-            color="neutral.500"
-            variant="body2"
-          >
-            Check out our Pro solution template.
-          </Typography>
-          <Box
-            sx={{
-              display: 'flex',
-              mt: 2,
-              mx: 'auto',
-              width: '160px',
-              '& img': {
-                width: '100%'
-              }
-            }}
-          >
-            <img
-              alt="Go to pro"
-              src="/assets/devias-kit-pro.png"
-            />
-          </Box>
-          <Button
-            component="a"
-            endIcon={(
-              <SvgIcon fontSize="small">
-                <ArrowTopRightOnSquareIcon />
-              </SvgIcon>
-            )}
-            fullWidth
-            href="https://material-kit-pro-react.devias.io/"
-            sx={{ mt: 2 }}
-            target="_blank"
-            variant="contained"
-          >
-            Pro Live Preview
-          </Button>
+
+
         </Box>
       </Box>
     </Scrollbar>
