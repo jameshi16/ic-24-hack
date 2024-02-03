@@ -71,7 +71,7 @@ const Page = () => {
     <>
       <Head>
         <title>
-          Login | Devias Kit
+          Login | { process.env.NEXT_PUBLIC_APP_NAME }
         </title>
       </Head>
       <Box

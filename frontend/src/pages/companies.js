@@ -71,7 +71,7 @@ const Page = () => (
   <>
     <Head>
       <title>
-        Companies | Devias Kit
+        Companies | { process.env.NEXT_PUBLIC_APP_NAME }
       </title>
     </Head>
     <Box

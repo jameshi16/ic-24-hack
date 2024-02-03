@@ -199,7 +199,7 @@ const Page = () => {
     <>
       <Head>
         <title>
-          Customers | Devias Kit
+          Customers | { process.env.NEXT_PUBLIC_APP_NAME }
         </title>
       </Head>
       <Box

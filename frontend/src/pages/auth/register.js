@@ -48,7 +48,7 @@ const Page = () => {
     <>
       <Head>
         <title>
-          Register | Devias Kit
+          Register | { process.env.NEXT_PUBLIC_APP_NAME }
         </title>
       </Head>
       <Box

@@ -7,7 +7,7 @@ const Page = () => (
   <>
     <Head>
       <title>
-        404 | Devias Kit
+        404 | { process.env.NEXT_PUBLIC_APP_NAME }
       </title>
     </Head>
     <Box

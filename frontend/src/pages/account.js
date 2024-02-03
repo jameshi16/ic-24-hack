@@ -8,7 +8,7 @@ const Page = () => (
   <>
     <Head>
       <title>
-        Account | Devias Kit
+          Account | { process.env.NEXT_PUBLIC_APP_NAME }
       </title>
     </Head>
     <Box

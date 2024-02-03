@@ -27,7 +27,7 @@ const App = (props) => {
     <CacheProvider value={emotionCache}>
       <Head>
         <title>
-          Devias Kit
+           { process.env.NEXT_PUBLIC_APP_NAME }
         </title>
         <meta
           name="viewport"
