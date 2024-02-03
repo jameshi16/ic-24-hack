@@ -1,36 +1,45 @@
 // Sleep, Alertness, Physical
-import { Chart } from 'src/components/chart';
-import { Typography } from '@mui/material';
-import { Box } from '@mui/material';
+import { useState, useEffect } from 'react';
+import { Box, Typography, Select, MenuItem } from '@mui/material';
+import { MetricGraph } from 'src/components/metric-graph';
+import { getFormattedDateTime } from 'src/utils/date-util';
 
-export const MetricCard = ({ event, close, _data }) => {
-  const data = {
-    options: {
-      chart: {
-        id: "basic-bar"
-      },
-      xaxis: {
-        categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998]
-      }
+export const MetricCard = ({ event, close }) => {
+  const [selectedMetric, setSelectedMetric] = useState(0);
+  const data = [
+    { // TODO: Probably want the metric ID here as well
+      times: ["2024-02-03T18:00", "2024-02-03T19:00"],
+      tensor: [[10, 10]]
     },
-    series: [
-      {
-        name: "series-1",
-        data: [30, 40, 45, 50, 49, 60, 70, 91]
-      }
-    ]
-  };
+    { // TODO: Probably want the metric ID here as well
+      times: ["2024-02-03T18:00", "2024-02-03T19:00"],
+      tensor: [[10, 20]]
+    },
+    { // TODO: Probably want the metric ID here as well
+      times: ["2024-02-03T18:00", "2024-02-03T19:00"],
+      tensor: [[30, 80]]
+    }
+  ];
+
+  const transformData = datapoint => ({
+    times: datapoint.times.map(val => getFormattedDateTime(val)),
+    tensor: datapoint.tensor,
+  });
 
   return (
     <Box sx={{ p: 2 }}>
       <Typography variant="h4">
         Data
       </Typography>
-      <Chart
-        options={data.options}
-        series={data.series}
-        type="line"
-        width="500"
+      <Select label="Metric" value={selectedMetric} onChange={
+        event => setSelectedMetric(event.target.value)}>
+        <MenuItem value={0}>Metric 1</MenuItem>
+        <MenuItem value={1}>Metric 2</MenuItem>
+        <MenuItem value={2}>Metric 3</MenuItem>
+      </Select>
+      <MetricGraph
+        times={transformData(data[selectedMetric]).times}
+        tensor={data[selectedMetric].tensor}
       />
     </Box>
   );
