@@ -25,7 +25,30 @@ const Page = () => (
     >
       <Container maxWidth="xl">
         <Stack>
-          Put content here
+          <Typography variant="h4">
+            Schedule
+          </Typography>
+          <Scheduler
+            view="day"
+            customViewer={(event, close) => <MetricCard event={event} close={close} data={{
+            }} />}
+            events={[
+              {
+                event_id: 1,
+                title: "Person1 ",
+                start: new Date("2024/2/3 09:30"),
+                end: new Date("2024/2/3 10:30"),
+                color: generateColorHex()
+              },
+              {
+                event_id: 2,
+                title: "Person 2",
+                start: new Date("2024/2/3 10:00"),
+                end: new Date("2024/2/3 11:00"),
+                color: generateColorHex()
+              },
+            ]}
+          />
         </Stack>
       </Container>
     </Box>
