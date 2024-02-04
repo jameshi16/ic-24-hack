@@ -47,7 +47,7 @@ class Fetcher:
 
 
     def activity_cleanup(self, user_id):
-        documents = self.sleep_collection.find({"_id.user_id": f"{user_id}"})
+        documents = self.activity_collection.find({"_id.user_id": f"{user_id}"})
 
         transformed_data = {"user_id": None, "activities": []}
 
@@ -79,5 +79,6 @@ class Fetcher:
 
 if __name__ == "__main__":
     fetcher = Fetcher()
-    print(fetcher.sleep_cleanup("test1"))
-    print(fetcher.activity_cleanup("test1"))
+    print(fetcher.sleep_cleanup("0"))
+    print(fetcher.sleep_cleanup("1"))
+    print(fetcher.activity_cleanup("0"))

@@ -24,8 +24,8 @@ def read_root():
 
 def populate_real_data(userid: str):
     fetcher = Fetcher()
-    calc = WellnessCalc(fetcher.activity_cleanup("0"),
-                        fetcher.sleep_cleanup("0"))
+    calc = WellnessCalc(fetcher.activity_cleanup(userid),
+                        fetcher.sleep_cleanup(userid))
     activity, sleep = calc.get_activity_score(), calc.get_sleep_scores()
     overall = calc.get_overall_score(activity, sleep, 4)
 

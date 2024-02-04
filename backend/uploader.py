@@ -45,7 +45,7 @@ class MongoUploader:
 
             # Inserting the transformed data into the collection
             collection.insert_one(transformed_data)
-    
+
     def generate_sleep(self, start_date, days):
         """
         Generates a list of random sleep data entries.
@@ -167,11 +167,11 @@ class MongoUploader:
 if __name__ == "__main__":
     mongo_client = MongoUploader()
 
-    # Generate and insert sleep data
-    sleep_nights = mongo_client.generate_sleep('2022-01-01', 7)
-    user_id = '0'
-    mongo_client.insert_needed_sleep(mongo_client.test_sleep, user_id, sleep_nights)
+    for i in range(10):
+        user_id = f'{i}'
+        sleep_nights = mongo_client.generate_sleep('2022-01-01', 7)
+        mongo_client.insert_needed_sleep(mongo_client.test_sleep, user_id, sleep_nights)
 
-    # Generate and insert activity data
-    activities = mongo_client.generate_activity('2022-01-01', 7, sleep_nights)
-    mongo_client.insert_needed_activity(mongo_client.test_activity, user_id, activities)
+        # Generate and insert activity data
+        activities = mongo_client.generate_activity('2022-01-01', 7, sleep_nights)
+        mongo_client.insert_needed_activity(mongo_client.test_activity, user_id, activities)
