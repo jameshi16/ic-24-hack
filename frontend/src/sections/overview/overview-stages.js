@@ -85,18 +85,6 @@ const useChartOptions = () => {
         '10',
         '•',
         '12',
-        '•',
-        '14',
-        '•',
-        '16',
-        '•',
-        '18',
-        '•',
-        '20',
-        '•',
-        '22',
-        '•',
-
       ],
       labels: {
         offsetY: 5,
@@ -137,7 +125,7 @@ export const OverviewSales = (props) => {
             Sync
           </Button>
         )}
-        title="Sleep"
+        title="Stages"
       />
       <CardContent>
         <Chart
