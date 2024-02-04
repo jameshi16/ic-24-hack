@@ -61,9 +61,4 @@ def get_user_data(userid: str):
 def set_task(task: dict):
     # create a Task object from the dictionary
     task = Task(**task)
-    print(task)
-    print(task.start_hour, task.end_hour, task.number)
-    print(scheduler.get_soldier_ids(task.start_hour, task.end_hour, task.number))
-    res = str(scheduler.get_soldier_ids(2, 5, 2))
-    # return the task object
-    return res
+    return [int(x) for x in scheduler.get_soldier_ids(task.start_hour, task.end_hour, task.number)]
