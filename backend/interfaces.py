@@ -1,3 +1,4 @@
+from datetime import datetime
 from dataclasses import dataclass, field
 from dataclasses_json import dataclass_json, config
 
@@ -12,10 +13,10 @@ class ScoreResponse:
 @dataclass_json
 @dataclass
 class Task:
-    start_hour: int
-    end_hour: int
+    start_dt: datetime
+    end_dt: datetime
     number: int
-    
+
 
 @dataclass_json
 @dataclass

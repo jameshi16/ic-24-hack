@@ -22,7 +22,8 @@ export const OverviewLatestProducts = (props) => {
 
   return (
     <Card sx={sx}>
-      <CardHeader title="Latest Products" />
+      <CardHeader title="Latest Reports" />
+      
       <List>
         {products.map((product, index) => {
           const hasDivider = index < products.length - 1;
@@ -33,32 +34,6 @@ export const OverviewLatestProducts = (props) => {
               divider={hasDivider}
               key={product.id}
             >
-              <ListItemAvatar>
-                {
-                  product.image
-                    ? (
-                      <Box
-                        component="img"
-                        src={product.image}
-                        sx={{
-                          borderRadius: 1,
-                          height: 48,
-                          width: 48
-                        }}
-                      />
-                    )
-                    : (
-                      <Box
-                        sx={{
-                          borderRadius: 1,
-                          backgroundColor: 'neutral.200',
-                          height: 48,
-                          width: 48
-                        }}
-                      />
-                    )
-                }
-              </ListItemAvatar>
               <ListItemText
                 primary={product.name}
                 primaryTypographyProps={{ variant: 'subtitle1' }}

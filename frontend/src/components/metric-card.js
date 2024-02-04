@@ -1,27 +1,41 @@
 // Sleep, Alertness, Physical
 import { useState, useEffect } from 'react';
-import { Box, Typography, Select, MenuItem } from '@mui/material';
+import { Box, Typography, Select, MenuItem, Skeleton } from '@mui/material';
 import { MetricGraph } from 'src/components/metric-graph';
 import { getFormattedDateTime } from 'src/utils/date-util';
+import axios from 'axios';
+
+const URL = process.env.NEXT_PUBLIC_API_URL;
 
 export const MetricCard = ({ event, close }) => {
   const [selectedMetric, setSelectedMetric] = useState(0);
-  const data = [
-    { // TODO: Probably want the metric ID here as well
-      times: ["2024-02-03T18:00", "2024-02-03T19:00"],
-      tensor: [[10, 10]]
-    },
-    { // TODO: Probably want the metric ID here as well
-      times: ["2024-02-03T18:00", "2024-02-03T19:00"],
-      tensor: [[10, 20]]
-    },
-    { // TODO: Probably want the metric ID here as well
-      times: ["2024-02-03T18:00", "2024-02-03T19:00"],
-      tensor: [[30, 80]]
-    }
-  ];
+  const [isLoading, setIsLoading] = useState(false);
+  const [data, setData] = useState({});
+  const [xAxis, setXAxis] = useState([]);
+  const userId = event.title.split(' ')[1];
 
-  const transformData = datapoint => ({
+  useEffect(() => {
+    setIsLoading(true);
+    axios.get(URL + `/get_user/${userId}`)
+      .then(response => {
+        setData(response.data.scores);
+        const startTime = new Date(response.data.start_time);
+
+        // NOTE: ugly hack to generate 100 hours. I'm dumb
+        let arr = [];
+        for (let i = 0; i < 100; i++) {
+          arr.push(new Date(startTime.getTime() + i * 1000 * 3600));
+        }
+        setXAxis(arr);
+        setSelectedMetric(Object.keys(response.data.scores)[0]);
+        setIsLoading(false);
+      }).catch(error => {
+        console.log(error);
+        alert("oh noes");
+      });
+  }, []);
+
+  const transformData = datApoint => ({
     times: datapoint.times.map(val => getFormattedDateTime(val)),
     tensor: datapoint.tensor,
   });
@@ -31,16 +45,24 @@ export const MetricCard = ({ event, close }) => {
       <Typography variant="h4">
         Data
       </Typography>
-      <Select label="Metric" value={selectedMetric} onChange={
-        event => setSelectedMetric(event.target.value)}>
-        <MenuItem value={0}>Metric 1</MenuItem>
-        <MenuItem value={1}>Metric 2</MenuItem>
-        <MenuItem value={2}>Metric 3</MenuItem>
-      </Select>
-      <MetricGraph
-        times={transformData(data[selectedMetric]).times}
-        tensor={data[selectedMetric].tensor}
-      />
+
+
+      {isLoading ?
+        <Skeleton variant="rectangular" /> :
+        <Select label="Metric" value={selectedMetric} onChange={
+          event => setSelectedMetric(event.target.value)}>
+          {
+            Object.keys(data).map((datum, index) => {
+              return <MenuItem value={datum}>{datum}</MenuItem>;
+            })
+          }
+        </Select>}
+      {isLoading ? <Skeleton variant="rectangular" width={500} height={200} /> :
+        <MetricGraph
+          times={xAxis.map(getFormattedDateTime)}
+          tensor={[data[selectedMetric]]}
+        />
+      }
     </Box>
   );
 };
