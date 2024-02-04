@@ -49,7 +49,7 @@ def populate_real_data(userid: str):
 
     return GetUserResponse(userid, calc.start_date, scores)
 
-
+tasks = [{"times": {"start": 5, "end": 7}, "number": [3]}]
 
 @app.get("/get_user/{userid}")
 def get_user_data(userid: str):
@@ -61,4 +61,11 @@ def get_user_data(userid: str):
 def set_task(task: dict):
     # create a Task object from the dictionary
     task = Task(**task)
-    return [int(x) for x in scheduler.get_soldier_ids(task.start_hour, task.end_hour, task.number)]
+    assigned = [int(x) for x in scheduler.get_soldier_ids(task.start_hour, task.end_hour, task.number)]
+    tasks.append({"times": {"start": task.start_hour, "end": task.end_hour}, "ids": assigned})
+    return assigned
+
+
+@app.get("/tasks")
+def get_tasks():
+    return tasks
