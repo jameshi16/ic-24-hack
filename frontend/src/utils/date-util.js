@@ -7,5 +7,5 @@ export const getFormattedDateTime = (date) => {
   const hours = dateObj.getHours().toString().padStart(2, '0');
   const minutes = dateObj.getMinutes().toString().padStart(2, '0');
 
-  return `${day}/${month}/${year}\n${hours}:${minutes}`;
+  return `${day}/${month} ${hours}:${minutes}`;
 };

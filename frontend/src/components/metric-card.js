@@ -59,7 +59,7 @@ export const MetricCard = ({ event, close }) => {
         </Select>}
       {isLoading ? <Skeleton variant="rectangular" width={500} height={200} /> :
         <MetricGraph
-          times={xAxis}
+          times={xAxis.map(getFormattedDateTime)}
           tensor={[data[selectedMetric]]}
         />
       }

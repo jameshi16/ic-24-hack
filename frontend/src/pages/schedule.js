@@ -28,7 +28,7 @@ const Page = () => {
       events: data.map((val, id) => {
         return ({
           event_id: id + 1,
-          title: `Person ${id + 1}`,
+          title: `Person ${val}`,
           start: new Date(Number(new Date(start_date)) + id * 3600 * 1000),
           end: new Date(Number(new Date(start_date)) + (id + 1) * 3600 * 1000),
           color: generateColorHex(),
@@ -53,7 +53,7 @@ const Page = () => {
 
   useEffect(() => {
     if (events.length > 0) {
-      setUnit(events[0]);
+      setUnit(events[events.length - 1]);
     }
   }, [events]);
 
