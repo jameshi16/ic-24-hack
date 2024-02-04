@@ -21,9 +21,6 @@ class Fetcher:
         self.activity_collection = self.db["activity"]
 
 
-    # query_result = collection.find({"_id.user_id": "test1"})
-
-
     def sleep_cleanup(self, user_id):
         documents = self.sleep_collection.find({"_id.user_id": f"{user_id}"})
         transformed_data = {"user_id": None, "durations": []}
