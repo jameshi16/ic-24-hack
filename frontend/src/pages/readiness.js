@@ -6,6 +6,7 @@ import { Scheduler } from '@aldabil/react-scheduler';
 import { generateColorHex } from 'src/utils/color-generator'
 import { Stack, Typography } from '@mui/material';
 import { MetricCard } from 'src/components/metric-card';
+import Forecast from 'src/sections/overview/overview-forecast';
 
 const Page = () => (
   <>
@@ -23,7 +24,7 @@ const Page = () => (
     >
       <Container maxWidth="xl">
         <Stack>
-          Put content here
+          <Forecast sx={{ height: '100%' }} />
         </Stack>
       </Container>
     </Box>

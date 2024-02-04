@@ -21,7 +21,7 @@ export const OverviewTotalCustomers = (props) => {
               color="text.secondary"
               variant="overline"
             >
-              Average Sleep
+              change in average sleep
             </Typography>
             <Typography variant="h4">
               {value}
@@ -83,4 +83,3 @@ OverviewTotalCustomers.propTypes = {
   value: PropTypes.string.isRequired,
   sx: PropTypes.object
 };
-
