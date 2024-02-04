@@ -22,8 +22,9 @@ const useSleepChartOptions = () => {
         },
         colors: [theme.palette.primary.main],
         xaxis: {
+            tickAmount: 13,
             type: 'category',
-            categories: Array.from({ length: 22 }, (_, i) => `${i}:00`),
+            categories: Array.from({ length: 24 }, (_, i) => `${i}:00`),
             tickPlacement: 'on'
         },
         yaxis: {

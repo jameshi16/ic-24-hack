@@ -125,7 +125,7 @@ export const OverviewSales = (props) => {
             Sync
           </Button>
         )}
-        title="Stages"
+        title="Sleep Stages"
       />
       <CardContent>
         <Chart
