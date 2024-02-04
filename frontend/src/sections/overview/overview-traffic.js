@@ -28,13 +28,18 @@ const useChartOptions = (labels) => {
     chart: {
       background: 'transparent'
     },
-    colors: [
-      theme.palette.primary.main,
-      theme.palette.success.main,
-      theme.palette.warning.main
-    ],
+    colors: colors,
     dataLabels: {
-      enabled: false
+      enabled: true, // Enable data labels
+      formatter: (val) => `${val.toFixed(0)}%`, // Format labels as percentages
+      dropShadow: {
+        enabled: false
+      },
+      style: {
+        fontSize: '16px', // Set the font size of the data labels
+        fontFamily: 'Helvetica, Arial, sans-serif', // Set the font family of the data labels
+        fontWeight: 600, // Set the font weight of the data labels
+      }
     },
     labels,
     legend: {
@@ -42,7 +47,10 @@ const useChartOptions = (labels) => {
     },
     plotOptions: {
       pie: {
-        expandOnClick: false
+        expandOnClick: false,
+        dataLabels: {
+          offset: -2 // Adjust this value to position the labels closer or further from the center
+        }
       }
     },
     states: {
@@ -106,7 +114,7 @@ export const OverviewTraffic = (props) => {
           alignItems="center"
           direction="row"
           justifyContent="center"
-          spacing={2}
+          spacing={3}
           sx={{ mt: 2 }}
         >
           {labels.map((label, index) => {
@@ -132,7 +140,7 @@ export const OverviewTraffic = (props) => {
                   color="text.secondary"
                   variant="subtitle2"
                 >
-                  {value}% 
+                  {value}%
                 </Typography>
               </Box>
             );
