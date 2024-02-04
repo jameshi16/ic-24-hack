@@ -10,7 +10,7 @@ const Page = () => (
       <title>
         Settings | Devias Kit
       </title>
-    </Head>
+    </Head>-
     <Box
       component="main"
       sx={{
