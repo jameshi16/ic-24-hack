@@ -8,7 +8,7 @@ class Scheduler:
         # soldiers_json is a dict, contains: soldier id, wellbeing scores
         self.soldiers = soldiers_json          # ids have to be indexed 0, 1, 2, ...
         self.queue = [[], [], [], [], []]
-        
+
     # return True if to_searh in q, else False
     def __is_present(self, to_search):
         for tup in self.queue:
@@ -16,7 +16,7 @@ class Scheduler:
                 if element == to_search:
                     return True
         return False
-           
+
     def get_soldier_ids(self, start_time, end_time, num_people):
         wellbeings = self.soldiers["wellbeing"]
         wellbeing_sums = [sum(wellbeing[start_time: end_time + 1]) for wellbeing in wellbeings]
