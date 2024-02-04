@@ -119,6 +119,8 @@ const Page = () => {
                 value="$15k"
               />
             </Grid>
+
+
             <Grid
               xs={12}
               md={6}
@@ -126,7 +128,7 @@ const Page = () => {
             >
               <OverviewTraffic
                 chartSeries={[63, 15, 22]}
-                labels={['Desktop', 'Tablet', 'Phone']}
+                labels={['Down', 'Mid', 'Good']}
                 sx={{ height: '100%' }}
               />
             </Grid>
@@ -171,6 +173,8 @@ const Page = () => {
                 sx={{ height: '100%' }}
               />
             </Grid>
+
+
             <Grid
               xs={12}
               md={12}

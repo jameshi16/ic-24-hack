@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
-import ComputerDesktopIcon from '@heroicons/react/24/solid/ComputerDesktopIcon';
-import DeviceTabletIcon from '@heroicons/react/24/solid/DeviceTabletIcon';
-import PhoneIcon from '@heroicons/react/24/solid/PhoneIcon';
+import EmojiEventsIcon from '@mui/icons-material/EmojiEvents'; // High morale
+import SentimentSatisfiedIcon from '@mui/icons-material/SentimentSatisfied'; // Average morale
+import SentimentDissatisfiedIcon from '@mui/icons-material/SentimentDissatisfied'; // Low morale
 import {
   Box,
   Card,
@@ -16,6 +16,13 @@ import { Chart } from 'src/components/chart';
 
 const useChartOptions = (labels) => {
   const theme = useTheme();
+
+  // Adjust the colors to be more appropriate for morale categories
+  const colors = [
+    theme.palette.success.main, // High morale
+    theme.palette.info.main,    // Average morale
+    theme.palette.error.main    // Low morale
+  ];
 
   return {
     chart: {
@@ -63,19 +70,19 @@ const useChartOptions = (labels) => {
 };
 
 const iconMap = {
-  Desktop: (
-    <SvgIcon>
-      <ComputerDesktopIcon />
+  'High Morale': (
+    <SvgIcon color="success">
+      <EmojiEventsIcon />
     </SvgIcon>
   ),
-  Tablet: (
-    <SvgIcon>
-      <DeviceTabletIcon />
+  'Average Morale': (
+    <SvgIcon color="info">
+      <SentimentSatisfiedIcon />
     </SvgIcon>
   ),
-  Phone: (
-    <SvgIcon>
-      <PhoneIcon />
+  'Low Morale': (
+    <SvgIcon color="error">
+      <SentimentDissatisfiedIcon />
     </SvgIcon>
   )
 };
@@ -86,7 +93,7 @@ export const OverviewTraffic = (props) => {
 
   return (
     <Card sx={sx}>
-      <CardHeader title="Traffic Source" />
+      <CardHeader title="Soldier Morale" />
       <CardContent>
         <Chart
           height={300}
@@ -102,8 +109,8 @@ export const OverviewTraffic = (props) => {
           spacing={2}
           sx={{ mt: 2 }}
         >
-          {chartSeries.map((item, index) => {
-            const label = labels[index];
+          {labels.map((label, index) => {
+            const value = chartSeries[index];
 
             return (
               <Box
@@ -125,7 +132,7 @@ export const OverviewTraffic = (props) => {
                   color="text.secondary"
                   variant="subtitle2"
                 >
-                  {item}%
+                  {value}% 
                 </Typography>
               </Box>
             );
@@ -137,7 +144,7 @@ export const OverviewTraffic = (props) => {
 };
 
 OverviewTraffic.propTypes = {
-  chartSeries: PropTypes.array.isRequired,
-  labels: PropTypes.array.isRequired,
+  chartSeries: PropTypes.arrayOf(PropTypes.number).isRequired,
+  labels: PropTypes.arrayOf(PropTypes.string).isRequired,
   sx: PropTypes.object
 };
