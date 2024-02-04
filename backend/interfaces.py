@@ -9,6 +9,13 @@ class ScoreResponse:
     sleep: list[int]
     # fitness: list[int]
 
+@dataclass_json
+@dataclass
+class Task:
+    start_hour: int
+    end_hour: int
+    number: int
+    
 
 @dataclass_json
 @dataclass

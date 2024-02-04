@@ -1,7 +1,7 @@
 from typing import Union
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from interfaces import GetUserResponse, ScoreResponse
+from interfaces import GetUserResponse, ScoreResponse, Task
 from all_well import WellnessCalc
 
 app = FastAPI()
@@ -58,3 +58,11 @@ def populate_real_data(userid: str):
 def get_user_data(userid: str):
     res = populate_real_data(userid)
     return res
+
+# post endpoint to get json called set-task
+@app.post("/set-task")
+def set_task(task: dict):
+    # create a Task object from the dictionary
+    task = Task(**task)
+    # return the task object
+    return task
