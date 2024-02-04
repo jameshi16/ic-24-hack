@@ -72,18 +72,31 @@ const useChartOptions = () => {
         show: true
       },
       categories: [
-        'Jan',
-        'Feb',
-        'Mar',
-        'Apr',
-        'May',
-        'Jun',
-        'Jul',
-        'Aug',
-        'Sep',
-        'Oct',
-        'Nov',
-        'Dec'
+        '24',
+        '•',
+        '2',
+        '•',
+        '4',
+        '•',
+        '6',
+        '•',
+        '8',
+        '•',
+        '10',
+        '•',
+        '12',
+        '•',
+        '14',
+        '•',
+        '16',
+        '•',
+        '18',
+        '•',
+        '20',
+        '•',
+        '22',
+        '•',
+
       ],
       labels: {
         offsetY: 5,
@@ -124,7 +137,7 @@ export const OverviewSales = (props) => {
             Sync
           </Button>
         )}
-        title="Sales"
+        title="Sleep"
       />
       <CardContent>
         <Chart
