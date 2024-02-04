@@ -59,6 +59,7 @@ const Page = () => {
               view="day"
               customViewer={(event, close) => <MetricCard event={event} close={close} />}
               events={unit ? unit.events.map(x => x) : []}
+              editor={false}
             />
           </Stack>
         </Container>

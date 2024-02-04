@@ -9,7 +9,8 @@ export const MetricGraph = ({ times, tensor }) => {
         id: "basic-bar"
       },
       xaxis: {
-        categories: times
+        categories: times,
+        tickAmount: 12
       }
     },
     series: [

@@ -12,19 +12,19 @@ export const MetricCard = ({ event, close }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [data, setData] = useState({});
   const [xAxis, setXAxis] = useState([]);
-  const userId = event.title;
+  const userId = event.title.split(' ')[1];
 
   useEffect(() => {
     setIsLoading(true);
     axios.get(URL + `/get_user/${userId}`)
       .then(response => {
         setData(response.data.scores);
-        const startTime = new Date(response.data.startTime);
+        const startTime = new Date(response.data.start_time);
 
         // NOTE: ugly hack to generate 100 hours. I'm dumb
         let arr = [];
-        for (let i = 0; i < response.data.length; i++) {
-          arr.push(startTime + i * 1000 * 3600);
+        for (let i = 0; i < 100; i++) {
+          arr.push(new Date(startTime.getTime() + i * 1000 * 3600));
         }
         setXAxis(arr);
         setSelectedMetric(Object.keys(response.data.scores)[0]);
