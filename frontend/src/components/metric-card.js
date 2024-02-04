@@ -1,6 +1,6 @@
 // Sleep, Alertness, Physical
 import { useState, useEffect } from 'react';
-import { Box, Typography, Select, MenuItem } from '@mui/material';
+import { Box, Typography, Select, MenuItem, Skeleton } from '@mui/material';
 import { MetricGraph } from 'src/components/metric-graph';
 import { getFormattedDateTime } from 'src/utils/date-util';
 import axios from 'axios';
@@ -15,6 +15,7 @@ export const MetricCard = ({ event, close }) => {
   const userId = event.title;
 
   useEffect(() => {
+    setIsLoading(true);
     axios.get(URL + `/get_user/${userId}`)
       .then(response => {
         setData(response.data.scores);
@@ -27,6 +28,7 @@ export const MetricCard = ({ event, close }) => {
         }
         setXAxis(arr);
         setSelectedMetric(Object.keys(response.data.scores)[0]);
+        setIsLoading(false);
       }).catch(error => {
         console.log(error);
         alert("oh noes");
@@ -43,18 +45,24 @@ export const MetricCard = ({ event, close }) => {
       <Typography variant="h4">
         Data
       </Typography>
-      <Select label="Metric" value={selectedMetric} onChange={
-        event => setSelectedMetric(event.target.value)}>
-        {
-          Object.keys(data).map((datum, index) => {
-            return <MenuItem value={datum}>{datum}</MenuItem>;
-          })
-        }
-      </Select>
-      <MetricGraph
-        times={xAxis}
-        tensor={[data[selectedMetric]]}
-      />
+
+
+      {isLoading ?
+        <Skeleton variant="rectangular" /> :
+        <Select label="Metric" value={selectedMetric} onChange={
+          event => setSelectedMetric(event.target.value)}>
+          {
+            Object.keys(data).map((datum, index) => {
+              return <MenuItem value={datum}>{datum}</MenuItem>;
+            })
+          }
+        </Select>}
+      {isLoading ? <Skeleton variant="rectangular" width={500} height={200} /> :
+        <MetricGraph
+          times={xAxis}
+          tensor={[data[selectedMetric]]}
+        />
+      }
     </Box>
   );
 };

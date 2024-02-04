@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField, Stack } from '@mui/material';
+import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField, Skeleton, Stack } from '@mui/material';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import AddIcon from '@mui/icons-material/Add';
 import axios from 'axios';
@@ -8,6 +8,7 @@ const URL = process.env.NEXT_PUBLIC_API_URL;
 
 export const AddTaskButton = () => {
   const [open, setOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [taskName, setTaskName] = useState('');
   const [startTime, setStartTime] = useState(new Date());
   const [endTime, setEndTime] = useState(new Date());
@@ -27,13 +28,17 @@ export const AddTaskButton = () => {
       return;
     }
 
+    setIsLoading(true);
     axios.post(URL + '/set-task', {
       start_hour: startTime.getHours(),
       end_hour: endTime.getHours(),
       number: people,
     }).catch(() => {
       console.log('uh oh, set task deadge');
-    }).finally(handleClose);
+    }).finally(() => {
+      handleClose();
+      setIsLoading(false);
+    });
   };
 
   const handleSetStartTime = (date) => {
@@ -113,14 +118,15 @@ export const AddTaskButton = () => {
             />
           </Stack>
         </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose} color="secondary">
-            Cancel
-          </Button>
-          <Button onClick={handleAddTask} color="primary">
-            Add Task
-          </Button>
-        </DialogActions>
+        {isLoading ? <Skeleton width={100} /> :
+          <DialogActions>
+            <Button onClick={handleClose} color="secondary">
+              Cancel
+            </Button>
+            <Button onClick={handleAddTask} color="primary">
+              Add Task
+            </Button>
+          </DialogActions>}
       </Dialog>
     </>
   );
