@@ -1,4 +1,3 @@
-import ChartBarIcon from '@heroicons/react/24/solid/ChartBarIcon';
 import CogIcon from '@heroicons/react/24/solid/CogIcon';
 import LockClosedIcon from '@heroicons/react/24/solid/LockClosedIcon';
 import ShoppingBagIcon from '@heroicons/react/24/solid/ShoppingBagIcon';
@@ -7,6 +6,8 @@ import UserPlusIcon from '@heroicons/react/24/solid/UserPlusIcon';
 import UsersIcon from '@heroicons/react/24/solid/UsersIcon';
 import XCircleIcon from '@heroicons/react/24/solid/XCircleIcon';
 import CalendarIcon from '@heroicons/react/24/solid/CalendarIcon';
+import ChartBarIcon from '@heroicons/react/24/solid/ChartBarIcon';
+import PresentationChartLineIcon from '@heroicons/react/24/solid/PresentationChartLineIcon';
 import { SvgIcon } from '@mui/material';
 
 export const items = [
@@ -28,6 +29,16 @@ export const items = [
       </SvgIcon>
     )
   },
+
+  {
+    title: 'Readiness Forecast',
+    path: '/readiness',
+    icon: (
+      <SvgIcon fontSize="small">
+        <PresentationChartLineIcon />
+      </SvgIcon>
+    )
+  }
   // {
   //   title: 'Error',
   //   path: '/404',
