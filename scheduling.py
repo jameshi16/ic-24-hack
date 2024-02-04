@@ -5,6 +5,7 @@ class Platoon:
         # soldiers_json is a dict, contains: soldier id, wellbeing scores
         self.soldiers = soldiers_json          # ids have to be indexed 0, 1, 2, ...
         self.queue = [[], [], [], [], []]
+        
     # return True if to_searh in q, else False
     def __is_present(self, to_search):
         for tup in self.queue:
@@ -29,10 +30,10 @@ class Platoon:
         # print(self.queue)
         return idx_soldier
 
-# dict0 = {"wellbeing": [[1,2,2,1,4,5,1,2,4,3,2,1,1,2,2,1,4,5,1,2,4,3,2,1], [41,8,2,8,4,5,1,2,8,3,2,1,8,2,2,1,4,8,1,2,4,8,2,1],
-#          [1,2,7,1,4,7,1,2,4,1,2,1,4,2,2,9,4,5,1,2,4,3,2,1], [8,2,2,1,4,5,9,2,4,3,2,9,1,2,2,5,4,5,1,4,4,2,29,1]], "id": [0, 1, 2, 3]}
-# plat = Platoon(dict0)
-# print(plat.get_soldier_ids(3, 5, 1))
-# print(plat.get_soldier_ids(6, 12, 2))
-# print(plat.get_soldier_ids(15, 20, 1))
-# print(plat.get_soldier_ids(21, 22, 1))
+dict0 = {"wellbeing": [[1,2,2,1,4,5,1,2,4,3,2,1,1,2,2,1,4,5,1,2,4,3,2,1], [41,8,2,8,4,5,1,2,8,3,2,1,8,2,2,1,4,8,1,2,4,8,2,1],
+         [1,2,7,1,4,7,1,2,4,1,2,1,4,2,2,9,4,5,1,2,4,3,2,1], [8,2,2,1,4,5,9,2,4,3,2,9,1,2,2,5,4,5,1,4,4,2,29,1]], "id": [0, 1, 2, 3]}
+plat = Platoon(dict0)
+print(plat.get_soldier_ids(3, 5, 1))
+print(plat.get_soldier_ids(6, 12, 2))
+print(plat.get_soldier_ids(15, 20, 1))
+print(plat.get_soldier_ids(21, 22, 1))
