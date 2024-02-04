@@ -26,7 +26,7 @@ from datetime import datetime
 @app.get("/get_user/{userid}")
 def get_user_data(userid: str):
     return GetUserResponse(userid, datetime.utcnow().isoformat(),
-                           [ScoreResponse([1, 2, 3],
-                                          [1, 2, 3],
-                                          [1, 2, 3],
-                                          [1, 2, 3])])
+                           ScoreResponse([1, 2, 3],
+                                         [1, 2, 3],
+                                         [1, 2, 3],
+                                         [1, 2, 3]))

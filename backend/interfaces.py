@@ -15,4 +15,4 @@ class ScoreResponse:
 class GetUserResponse:
     userid: str
     start_time: int = field(metadata=config(field_name='startTime'))
-    scores: list[ScoreResponse]
+    scores: ScoreResponse
