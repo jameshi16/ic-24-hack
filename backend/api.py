@@ -4,8 +4,24 @@ from fastapi.middleware.cors import CORSMiddleware
 from interfaces import GetUserResponse, ScoreResponse, Task
 from all_well import WellnessCalc
 from fetch import Fetcher
+from scheduling import Scheduler
+import json
+import numpy as np
 
 app = FastAPI()
+n = 8
+
+fetcher = Fetcher()
+wellbeings, ids = [], []
+for i in range(6):
+    calc = WellnessCalc(fetcher.activity_cleanup(f"{i}"),
+                        fetcher.sleep_cleanup(f"{i}"))
+    activity, sleep = calc.get_activity_score(), calc.get_sleep_scores()
+    overall = calc.get_overall_score(activity, sleep, 4)
+    wellbeings.append(overall)
+    ids.append(i)
+dict0 = {"wellbeing": wellbeings, "id": ids}
+scheduler = Scheduler(dict0)
 
 origins = ['*']
 app.add_middleware(
@@ -45,5 +61,4 @@ def get_user_data(userid: str):
 def set_task(task: dict):
     # create a Task object from the dictionary
     task = Task(**task)
-    # return the task object
-    return task
+    return [int(x) for x in scheduler.get_soldier_ids(task.start_hour, task.end_hour, task.number)]
