@@ -99,7 +99,25 @@ const useChartOptions = () => {
           colors: theme.palette.text.secondary
         }
       }
-    }
+    },
+    legend: {
+      show: true, // Show the legend
+      position: 'bottom', // Position the legend at the bottom
+      horizontalAlign: 'center', // Center align the legend
+      fontSize: '14px',
+      labels: {
+        colors: theme.palette.text.primary
+      },
+      markers: {
+        width: 12,
+        height: 12,
+        radius: 12
+      },
+      itemMargin: {
+        horizontal: 15,
+        vertical: 5
+      }
+    },
   };
 };
 
@@ -152,20 +170,6 @@ export const OverviewSales = ({ sleepStages, sx }) => {
           width="100%"
         />
       </CardContent>
-      <Divider />
-      <CardActions sx={{ justifyContent: 'flex-end' }}>
-        <Button
-          color="inherit"
-          endIcon={(
-            <SvgIcon fontSize="small">
-              <ArrowRightIcon />
-            </SvgIcon>
-          )}
-          size="small"
-        >
-          Overview
-        </Button>
-      </CardActions>
     </Card>
   );
 };
