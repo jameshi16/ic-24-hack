@@ -78,17 +78,17 @@ const useChartOptions = (labels) => {
 };
 
 const iconMap = {
-  'High Morale': (
+  'High': (
     <SvgIcon color="success">
       <EmojiEventsIcon />
     </SvgIcon>
   ),
-  'Average Morale': (
+  'Mid': (
     <SvgIcon color="info">
       <SentimentSatisfiedIcon />
     </SvgIcon>
   ),
-  'Low Morale': (
+  'Down': (
     <SvgIcon color="error">
       <SentimentDissatisfiedIcon />
     </SvgIcon>
@@ -96,7 +96,8 @@ const iconMap = {
 };
 
 export const OverviewTraffic = (props) => {
-  const { chartSeries, labels, sx } = props;
+  const { chartSeries, sx } = props;
+  const labels = ["Down", "Mid", "High"];
   const chartOptions = useChartOptions(labels);
 
   return (
@@ -118,7 +119,6 @@ export const OverviewTraffic = (props) => {
           sx={{ mt: 2 }}
         >
           {labels.map((label, index) => {
-            const value = chartSeries[index];
 
             return (
               <Box
@@ -134,13 +134,7 @@ export const OverviewTraffic = (props) => {
                   sx={{ my: 1 }}
                   variant="h6"
                 >
-                  {label}
-                </Typography>
-                <Typography
-                  color="text.secondary"
-                  variant="subtitle2"
-                >
-                  {value}%
+                  {label} Morale
                 </Typography>
               </Box>
             );
@@ -151,8 +145,8 @@ export const OverviewTraffic = (props) => {
   );
 };
 
+
 OverviewTraffic.propTypes = {
   chartSeries: PropTypes.arrayOf(PropTypes.number).isRequired,
-  labels: PropTypes.arrayOf(PropTypes.string).isRequired,
   sx: PropTypes.object
 };
