@@ -33,7 +33,7 @@ class WellnessCalc:
         return hourly_scores
 
     def calculate_sleep_score(self, light_time, deep_time, rem_time):
-        score = (light_time * 0.25 + deep_time * 0.4 + rem_time * 0.35) / 480 * 10  # Normalize to a scale of 1-10
+        score = ((light_time * 0.25 + deep_time * 0.4 + rem_time * 0.35 - 185) ** 3 + 185) / 480 * 10  # Normalize to a scale of 1-10
         return round(score, 1)
 
     def get_sleep_scores(self):
