@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
-import ComputerDesktopIcon from '@heroicons/react/24/solid/ComputerDesktopIcon';
-import DeviceTabletIcon from '@heroicons/react/24/solid/DeviceTabletIcon';
-import PhoneIcon from '@heroicons/react/24/solid/PhoneIcon';
+import EmojiEventsIcon from '@mui/icons-material/EmojiEvents'; // High morale
+import SentimentSatisfiedIcon from '@mui/icons-material/SentimentSatisfied'; // Average morale
+import SentimentDissatisfiedIcon from '@mui/icons-material/SentimentDissatisfied'; // Low morale
 import {
   Box,
   Card,
@@ -17,17 +17,29 @@ import { Chart } from 'src/components/chart';
 const useChartOptions = (labels) => {
   const theme = useTheme();
 
+  // Adjust the colors to be more appropriate for morale categories
+  const colors = [
+    theme.palette.success.main, // High morale
+    theme.palette.info.main,    // Average morale
+    theme.palette.error.main    // Low morale
+  ];
+
   return {
     chart: {
       background: 'transparent'
     },
-    colors: [
-      theme.palette.primary.main,
-      theme.palette.success.main,
-      theme.palette.warning.main
-    ],
+    colors: colors,
     dataLabels: {
-      enabled: false
+      enabled: true, // Enable data labels
+      formatter: (val) => `${val.toFixed(0)}%`, // Format labels as percentages
+      dropShadow: {
+        enabled: false
+      },
+      style: {
+        fontSize: '16px', // Set the font size of the data labels
+        fontFamily: 'Helvetica, Arial, sans-serif', // Set the font family of the data labels
+        fontWeight: 600, // Set the font weight of the data labels
+      }
     },
     labels,
     legend: {
@@ -35,7 +47,10 @@ const useChartOptions = (labels) => {
     },
     plotOptions: {
       pie: {
-        expandOnClick: false
+        expandOnClick: false,
+        dataLabels: {
+          offset: -2 // Adjust this value to position the labels closer or further from the center
+        }
       }
     },
     states: {
@@ -63,30 +78,31 @@ const useChartOptions = (labels) => {
 };
 
 const iconMap = {
-  Desktop: (
-    <SvgIcon>
-      <ComputerDesktopIcon />
+  'High': (
+    <SvgIcon color="success">
+      <EmojiEventsIcon />
     </SvgIcon>
   ),
-  Tablet: (
-    <SvgIcon>
-      <DeviceTabletIcon />
+  'Mid': (
+    <SvgIcon color="info">
+      <SentimentSatisfiedIcon />
     </SvgIcon>
   ),
-  Phone: (
-    <SvgIcon>
-      <PhoneIcon />
+  'Down': (
+    <SvgIcon color="error">
+      <SentimentDissatisfiedIcon />
     </SvgIcon>
   )
 };
 
 export const OverviewTraffic = (props) => {
-  const { chartSeries, labels, sx } = props;
+  const { chartSeries, sx } = props;
+  const labels = ["Down", "Mid", "High"];
   const chartOptions = useChartOptions(labels);
 
   return (
     <Card sx={sx}>
-      <CardHeader title="Traffic Source" />
+      <CardHeader title="Soldier Morale" />
       <CardContent>
         <Chart
           height={300}
@@ -99,11 +115,10 @@ export const OverviewTraffic = (props) => {
           alignItems="center"
           direction="row"
           justifyContent="center"
-          spacing={2}
+          spacing={3}
           sx={{ mt: 2 }}
         >
-          {chartSeries.map((item, index) => {
-            const label = labels[index];
+          {labels.map((label, index) => {
 
             return (
               <Box
@@ -119,13 +134,7 @@ export const OverviewTraffic = (props) => {
                   sx={{ my: 1 }}
                   variant="h6"
                 >
-                  {label}
-                </Typography>
-                <Typography
-                  color="text.secondary"
-                  variant="subtitle2"
-                >
-                  {item}%
+                  {label} Morale
                 </Typography>
               </Box>
             );
@@ -136,8 +145,8 @@ export const OverviewTraffic = (props) => {
   );
 };
 
+
 OverviewTraffic.propTypes = {
-  chartSeries: PropTypes.array.isRequired,
-  labels: PropTypes.array.isRequired,
+  chartSeries: PropTypes.arrayOf(PropTypes.number).isRequired,
   sx: PropTypes.object
 };

@@ -1,0 +1,7 @@
+fastapi
+uvicorn[standard]
+pymongo
+pandas
+numpy
+pylint
+dataclasses-json
