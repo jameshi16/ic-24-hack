@@ -1,72 +1,38 @@
 import numpy as np
 
-# TODO: put elsewhere
-class Soldier:
-    def __init__(self, soldier_id: str, sleep_scores: [float]):
-        self.soldier_id = soldier_id
-        self.__sleep_scores = sleep_scores
+class Platoon:
+    def __init__(self, soldiers_json) -> None:
+        # soldiers_json is a dict, contains: soldier id, wellbeing scores
+        self.soldiers = soldiers_json          # ids have to be indexed 0, 1, 2, ...
+        self.queue = [[], [], [], [], []]
+    # return True if to_searh in q, else False
+    def __is_present(self, to_search):
+        for tup in self.queue:
+            for element in tup:
+                if element == to_search:
+                    return True
+        return False
+           
+    def get_soldier_ids(self, start_time, end_time, num_people):
+        wellbeings = self.soldiers["wellbeing"]
+        wellbeing_sums = [sum(wellbeing[start_time: end_time + 1]) for wellbeing in wellbeings]
+        idx_soldier = []
+        while len(idx_soldier) < num_people:
+            if max(wellbeing_sums) == -1:
+                break
+            curr_idx = np.argmax(np.array(wellbeing_sums))
+            if not self.__is_present(curr_idx):
+                idx_soldier.append(curr_idx)
+            wellbeing_sums[curr_idx] = -1
+        self.queue = self.queue[1:]
+        self.queue.append(idx_soldier)
+        #print(self.queue)
+        return idx_soldier
 
-        self.optimum_time = self.__get_optimum_time()
-
-    def __get_optimum_time(self):
-        # so far just based on sleep scores
-        return np.argmin(np.array(self.__sleep_scores))[0]
-
-class Schedule:
-    def __init__(self, soldiers: [Soldier], slot_length: float, total_interval: float) -> None: 
-        # interval and slot length is in hours
-        if self.total_interval % slot_length != 0:
-            raise ValueError("Condition not satisfied during initialization, total_interval should be a multiple of shift_length")
-        self.soldiers = soldiers
-        self.slot_length = slot_length
-        self.total_interval = total_interval
-
-    # def make_schedule0(self):
-    #     # sort soldiers by optimum time
-    #     self.soldiers.sort(key=lambda x: x.optimum_time)
-    #     # split total_interval into slots (by shift_length)
-    #     slots = []
-    #     for i in range(int(self.total_interval) self.slot_length)):
-    #         slots.append(i + (1/2) * self.slot_length)
-    #     # while soldiers, loop over slots (use central time of slot), add agent w closest optimum_time to slot
-    #     schedule = [[] * len(slots)]
-    #     break_loop = False
-    #     while not break_loop:
-    #         for s in slots:
-    #             if not self.soldiers:
-    #                 break_loop = True
-    #                 break
-    #             soldier_index = np.argmin(np.array(self.soldiers), key=lambda x: abs(s - x.optimum_time))
-    #             schedule[s - (1/2) * self.slot_length].append(self.soldiers.pop(soldier_index))
-                
-
-    #     # return slots (each slot has list of soldiers)
-    #     return schedule
-    
-
-    # db_caller for data
-    # intensity of sleep
-    def check_match(self, soft_limit, idx):
-        return idx in soft_limit[:10]
-        
-    def get_optimum_time():
-        pass
-    
-    def make_schedule0(self):
-        optimum_time = self.get_optimum_time()
-        sorted_optimum = np.argsort(optimum_time)
-        schedule = []
-        for i in range(int(self.total_interval/self.slot_length)):
-            time = (self.slot_length * i) % 24 
-            count = 0
-            while not self.check_match(self.soldier[-(time % len(self.agent))]):
-                count += 1
-                time += count
-                count += 1
-                time -= count
-                # oscillator for in front behind which makes hard constraint on number of days
-            schedule.append(self.soldier[-(time % len(self.agent))])
-    # soft constraints: sleep schedule peak times, same no of shifts across the board, i.e. uniformly distributed
-    # things to think about: combination for metrics, make sure as much time is covered as possible
-    
-sch = Schedule([Soldier("1", [1,3,4])])
+# dict0 = {"wellbeing": [[1,2,2,1,4,5,1,2,4,3,2,1,1,2,2,1,4,5,1,2,4,3,2,1], [41,8,2,8,4,5,1,2,8,3,2,1,8,2,2,1,4,8,1,2,4,8,2,1],
+#          [1,2,7,1,4,7,1,2,4,1,2,1,4,2,2,9,4,5,1,2,4,3,2,1], [8,2,2,1,4,5,9,2,4,3,2,9,1,2,2,5,4,5,1,4,4,2,29,1]], "id": [0, 1, 2, 3]}
+# plat = Platoon(dict0)
+# print(plat.get_soldier_ids(3, 5, 1))
+# print(plat.get_soldier_ids(6, 12, 2))
+# print(plat.get_soldier_ids(15, 20, 1))
+# print(plat.get_soldier_ids(21, 22, 1))
