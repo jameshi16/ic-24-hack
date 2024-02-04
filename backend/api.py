@@ -4,8 +4,25 @@ from fastapi.middleware.cors import CORSMiddleware
 from interfaces import GetUserResponse, ScoreResponse, Task
 from all_well import WellnessCalc
 from fetch import Fetcher
+from scheduling import Scheduler
+import json
+import numpy as np
+from forecast import Forecaster
 
 app = FastAPI()
+n = 8
+
+fetcher = Fetcher()
+wellbeings, ids = [], []
+for i in range(n):
+    calc = WellnessCalc(fetcher.activity_cleanup(f"{i}"),
+                        fetcher.sleep_cleanup(f"{i}"))
+    activity, sleep = calc.get_activity_score(), calc.get_sleep_scores()
+    overall = calc.get_overall_score(activity, sleep, 4)
+    wellbeings.append(overall)
+    ids.append(i)
+dict0 = {"wellbeing": wellbeings, "id": ids}
+scheduler = Scheduler(dict0)
 
 origins = ['*']
 app.add_middleware(
@@ -33,7 +50,7 @@ def populate_real_data(userid: str):
 
     return GetUserResponse(userid, calc.start_date, scores)
 
-
+tasks = [{"times": {"start": 5, "end": 7}, "number": [3]}]
 
 @app.get("/get_user/{userid}")
 def get_user_data(userid: str):
@@ -45,5 +62,19 @@ def get_user_data(userid: str):
 def set_task(task: dict):
     # create a Task object from the dictionary
     task = Task(**task)
-    # return the task object
-    return task
+    assigned = [int(x) for x in scheduler.get_soldier_ids(task.start_hour, task.end_hour, task.number)]
+    tasks.append({"times": {"start": task.start_hour, "end": task.end_hour}, "ids": assigned})
+    return assigned
+
+
+@app.get("/tasks")
+def get_tasks():
+    return tasks
+
+@app.get("/forecast")
+def forecast():
+    data = dict0["wellbeing"][0]
+    forecaster = Forecaster(data)
+    actual, forecast = forecaster.forecast()
+
+    return {"actual":actual, "forecast":forecast}
