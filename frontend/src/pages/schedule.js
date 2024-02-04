@@ -8,19 +8,58 @@ import { Scheduler } from '@aldabil/react-scheduler';
 import { generateColorHex } from 'src/utils/color-generator';
 import { Stack, Typography } from '@mui/material';
 import { MetricCard } from 'src/components/metric-card';
-import { useAppStore, useAppSelector } from 'src/hooks/use-store';
+import { useAppStore, useAppSelector, useAppDispatch } from 'src/hooks/use-store';
 import { Button } from '@mui/material';
 import { AddTaskButton } from 'src/components/add-task-button';
+import { setUnits, store } from 'src/lib/store.js';
+import axios from 'axios';
+
+const URL = process.env.NEXT_PUBLIC_API_URL;
 
 const Page = () => {
-  const units = useAppSelector(state => state.units);
+  const [events, setEvents] = useState([]);
 
   const [unit, setUnit] = useState(null);
+
+  const translateUnitToBackend = (idx, start_date, data) => {
+    return ({
+      id: idx,
+      name: `Sub Unit ${idx + 1}`,
+      events: data.map((val, id) => {
+        return ({
+          event_id: id + 1,
+          title: `Person ${id + 1}`,
+          start: new Date(Number(new Date(start_date)) + id * 3600 * 1000),
+          end: new Date(Number(new Date(start_date)) + (id + 1) * 3600 * 1000),
+          color: generateColorHex(),
+        });
+      })
+    });
+  };
+
+  const fetchData = () => {
+    axios.get(URL + '/tasks').then(res => {
+      setEvents(res.data.map((val, idx) =>
+        translateUnitToBackend(idx, val.times.start, val.ids)));
+    }).catch(e => {
+      console.log(e);
+      alert('tasks error. is API on?');
+    });
+  };
+
   useEffect(() => {
-    if (units.length > 0) {
-      setUnit(units[0]);
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    if (events.length > 0) {
+      setUnit(events[0]);
     }
-  }, [units]);
+  }, [events]);
+
+  useEffect(() => {
+    console.log(unit);
+  }, [unit]);
 
   return (
     <>
@@ -43,12 +82,12 @@ const Page = () => {
                 Schedule
               </Typography>
               <Stack direction="row" alignItems="center" spacing={2}>
-                <AddTaskButton />
+                <AddTaskButton taskUpdatedCallback={fetchData} />
                 <Select label="Metric" onChange={event => {
-                  setUnit(units.find(data => event.target.value === data.id));
+                  setUnit(events.find(data => event.target.value === data.id));
                 }} value={unit ? unit.id : null}>
                   {
-                    units.map(val => (
+                    events.map(val => (
                       <MenuItem value={val.id}>{val.name}</MenuItem>
                     ))
                   }
@@ -60,6 +99,10 @@ const Page = () => {
               customViewer={(event, close) => <MetricCard event={event} close={close} />}
               events={unit ? unit.events.map(x => x) : []}
               editor={false}
+              props={{
+                startHour: 8,
+                endHour: 17,
+              }}
             />
           </Stack>
         </Container>

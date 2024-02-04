@@ -46,7 +46,7 @@ const initialUnit = [
 
 const unitsSlice = createSlice({
   name: 'units',
-  initialState: initialUnit,
+  initialState: [],
   reducers: {
     addUnit(state, action) {
       state.units.push({
@@ -55,10 +55,15 @@ const unitsSlice = createSlice({
       });
     },
     removeUnit(state, action) {
-      state.units = state.units.filter(unit => unit.id !== action.payload.id);
+      state.units = state.filter(unit => unit.id !== action.payload.id);
+    },
+    setUnits(state, action) {
+      state = action.payload;
     }
   }
 });
+
+export const { addUnit, removeUnit, setUnits } = unitsSlice.actions;
 
 export const store = configureStore({
   reducer: {

@@ -6,7 +6,7 @@ import axios from 'axios';
 
 const URL = process.env.NEXT_PUBLIC_API_URL;
 
-export const AddTaskButton = () => {
+export const AddTaskButton = ({ taskUpdatedCallback }) => {
   const [open, setOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [taskName, setTaskName] = useState('');
@@ -30,14 +30,17 @@ export const AddTaskButton = () => {
 
     setIsLoading(true);
     axios.post(URL + '/set-task', {
-      start_hour: startTime.getHours(),
-      end_hour: endTime.getHours(),
+      start_dt: startTime,
+      end_dt: endTime,
       number: people,
     }).catch(() => {
       console.log('uh oh, set task deadge');
     }).finally(() => {
       handleClose();
       setIsLoading(false);
+      if (taskUpdatedCallback) {
+        taskUpdatedCallback();
+      }
     });
   };
 
