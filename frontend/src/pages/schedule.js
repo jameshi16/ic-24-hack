@@ -9,6 +9,8 @@ import { generateColorHex } from 'src/utils/color-generator';
 import { Stack, Typography } from '@mui/material';
 import { MetricCard } from 'src/components/metric-card';
 import { useAppStore, useAppSelector } from 'src/hooks/use-store';
+import { Button } from '@mui/material';
+import { AddTaskButton } from 'src/components/add-task-button';
 
 const Page = () => {
   const units = useAppSelector(state => state.units);
@@ -40,15 +42,18 @@ const Page = () => {
               <Typography variant="h4">
                 Schedule
               </Typography>
-              <Select label="Metric" onChange={event => {
-                setUnit(units.find(data => event.target.value === data.id));
-              }} value={unit ? unit.id : null}>
-                {
-                  units.map(val => (
-                    <MenuItem value={val.id}>{val.name}</MenuItem>
-                  ))
-                }
-              </Select>
+              <Stack direction="row" alignItems="center" spacing={2}>
+                <AddTaskButton />
+                <Select label="Metric" onChange={event => {
+                  setUnit(units.find(data => event.target.value === data.id));
+                }} value={unit ? unit.id : null}>
+                  {
+                    units.map(val => (
+                      <MenuItem value={val.id}>{val.name}</MenuItem>
+                    ))
+                  }
+                </Select>
+              </Stack>
             </Stack>
             <Scheduler
               view="day"
