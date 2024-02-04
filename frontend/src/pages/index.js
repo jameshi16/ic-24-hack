@@ -1,3 +1,4 @@
+
 import Head from 'next/head';
 import { subDays, subHours } from 'date-fns';
 import { Box, Container, Unstable_Grid2 as Grid } from '@mui/material';
@@ -5,16 +6,14 @@ import React, { useEffect, useState } from 'react';
 import { Layout as DashboardLayout } from 'src/layouts/dashboard/layout';
 import { OverviewBudget } from 'src/sections/overview/overview-budget';
 import { OverviewLatestOrders } from 'src/sections/overview/overview-latest-orders';
-import { OverviewLatestProducts } from 'src/sections/overview/overview-latest-products';
+import { OverviewLatestProducts } from 'src/sections/overview/overview-latest-reports';
 import { OverviewSales } from 'src/sections/overview/overview-stages';
 import { OverviewTasksProgress } from 'src/sections/overview/overview-tasks-progress';
 import { OverviewTotalCustomers } from 'src/sections/overview/overview-total-customers';
 import { OverviewTotalProfit } from 'src/sections/overview/overview-total-profit';
 import { OverviewTraffic } from 'src/sections/overview/overview-traffic';
-//
 import SleepLevelChart from 'src/sections/overview/overview-sleep';
-
-
+import { OverviewTrainingHours } from 'src/sections/overview/overview-training-hours';
 
 //DATA GENERATION 
 const generateSleepStagesData = () => {
@@ -36,6 +35,8 @@ const Page = () => {
 
   const sleepStages = generateSleepStagesData();
   const sleepData = generateSleepData();
+  const trainingHours = 5; // Example static data
+
 
   return (
     <>
@@ -75,18 +76,11 @@ const Page = () => {
             container
             spacing={3}
           >
-            <Grid
-              xs={12}
-              sm={6}
-              lg={3}
-            >
-              <OverviewBudget
-                difference={12}
-                positive
-                sx={{ height: '100%' }}
-                value="$24k"
-              />
+
+            <Grid item xs={12} sm={6} lg={3}>
+              <OverviewTrainingHours hours={trainingHours} sx={{ height: '100%' }} />
             </Grid>
+
             <Grid
               xs={12}
               sm={6}
@@ -99,6 +93,7 @@ const Page = () => {
                 value="1.6k"
               />
             </Grid>
+
             <Grid
               xs={12}
               sm={6}
@@ -132,6 +127,7 @@ const Page = () => {
                 sx={{ height: '100%' }}
               />
             </Grid>
+
             <Grid
               xs={12}
               md={6}
@@ -142,31 +138,31 @@ const Page = () => {
                   {
                     id: '5ece2c077e39da27658aa8a9',
                     image: '/assets/products/product-1.png',
-                    name: 'Healthcare Erbology',
+                    name: 'Terrain Analysis',
                     updatedAt: subHours(now, 6).getTime()
                   },
                   {
                     id: '5ece2c0d16f70bff2cf86cd8',
                     image: '/assets/products/product-2.png',
-                    name: 'Makeup Lancome Rouge',
+                    name: 'Disengage & Execute Briefing',
                     updatedAt: subDays(subHours(now, 8), 2).getTime()
                   },
                   {
                     id: 'b393ce1b09c1254c3a92c827',
                     image: '/assets/products/product-5.png',
-                    name: 'Skincare Soja CO',
+                    name: 'Sierra OP',
                     updatedAt: subDays(subHours(now, 1), 1).getTime()
                   },
                   {
                     id: 'a6ede15670da63f49f752c89',
                     image: '/assets/products/product-6.png',
-                    name: 'Makeup Lipstick',
+                    name: 'Request Documents',
                     updatedAt: subDays(subHours(now, 3), 3).getTime()
                   },
                   {
                     id: 'bcad5524fe3a2f8f8620ceda',
                     image: '/assets/products/product-7.png',
-                    name: 'Healthcare Ritual',
+                    name: 'El Capitan',
                     updatedAt: subDays(subHours(now, 5), 6).getTime()
                   }
                 ]}
