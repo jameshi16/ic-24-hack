@@ -10,23 +10,33 @@ import {
   Divider,
   SvgIcon
 } from '@mui/material';
-import { alpha, useTheme } from '@mui/material/styles';
+import { useTheme } from '@mui/material/styles';
 import { Chart } from 'src/components/chart';
 
 const useChartOptions = () => {
   const theme = useTheme();
 
+  // Define a color for each sleep stage
+  const stageColors = {
+    deep: '#3f51b5',
+    light: '#2196f3',
+    rem: '#f50057',
+    awake: '#ffeb3b'
+  };
+
   return {
     chart: {
       background: 'transparent',
-      stacked: false,
+      stacked: true,
       toolbar: {
         show: false
       }
     },
-    colors: [theme.palette.primary.main, alpha(theme.palette.primary.main, 0.25)],
-    dataLabels: {
-      enabled: false
+    colors: Object.values(stageColors), // Use the colors for the stages
+    plotOptions: {
+      bar: {
+        horizontal: false,
+      }
     },
     fill: {
       opacity: 1,
@@ -72,19 +82,7 @@ const useChartOptions = () => {
         show: true
       },
       categories: [
-        '24',
-        '•',
-        '2',
-        '•',
-        '4',
-        '•',
-        '6',
-        '•',
-        '8',
-        '•',
-        '10',
-        '•',
-        '12',
+        '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'
       ],
       labels: {
         offsetY: 5,
@@ -95,7 +93,7 @@ const useChartOptions = () => {
     },
     yaxis: {
       labels: {
-        formatter: (value) => (value > 0 ? `${value}K` : `${value}`),
+        formatter: (value) => (value > 0 ? `${value}H` : `${value}`),
         offsetX: -10,
         style: {
           colors: theme.palette.text.secondary
@@ -105,9 +103,27 @@ const useChartOptions = () => {
   };
 };
 
-export const OverviewSales = (props) => {
-  const { chartSeries, sx } = props;
+export const OverviewSales = ({ sleepStages, sx }) => {
   const chartOptions = useChartOptions();
+
+  const chartSeries = [
+    {
+      name: 'Deep',
+      data: sleepStages.deep
+    },
+    {
+      name: 'Light',
+      data: sleepStages.light
+    },
+    {
+      name: 'REM',
+      data: sleepStages.rem
+    },
+    {
+      name: 'Awake',
+      data: sleepStages.awake
+    }
+  ];
 
   return (
     <Card sx={sx}>
@@ -154,7 +170,13 @@ export const OverviewSales = (props) => {
   );
 };
 
-OverviewSales.protoTypes = {
-  chartSeries: PropTypes.array.isRequired,
+
+OverviewSales.propTypes = {
+  sleepStages: PropTypes.shape({
+    deep: PropTypes.arrayOf(PropTypes.number).isRequired,
+    light: PropTypes.arrayOf(PropTypes.number).isRequired,
+    rem: PropTypes.arrayOf(PropTypes.number).isRequired,
+    awake: PropTypes.arrayOf(PropTypes.number).isRequired
+  }).isRequired,
   sx: PropTypes.object
 };

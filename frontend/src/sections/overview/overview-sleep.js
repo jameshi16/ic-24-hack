@@ -29,7 +29,7 @@ const useSleepChartOptions = () => {
         },
         yaxis: {
             labels: {
-                formatter: (value) => `${value} lvl`,
+                formatter: (value) => `${value} H`,
             }
         },
         tooltip: {
@@ -52,7 +52,7 @@ const SleepLevelChart = ({ data, sx }) => {
 
     return (
         <Card sx={sx}>
-            <CardHeader title="Sleep Level Over 24 Hours" />
+            <CardHeader title="Aggregated Sleep Level Over 24 Hours" />
             <CardContent>
                 <Chart
                     options={chartOptions}

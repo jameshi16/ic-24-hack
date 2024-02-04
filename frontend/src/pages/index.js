@@ -14,15 +14,27 @@ import { OverviewTraffic } from 'src/sections/overview/overview-traffic';
 //
 import SleepLevelChart from 'src/sections/overview/overview-sleep';
 
+
+
+//DATA GENERATION 
+const generateSleepStagesData = () => {
+
+  return {
+    deep: [3, 2, 2, 1, 4, 3, 2, 3, 2, 3, 4, 3],
+    light: [5, 6, 5, 4, 5, 6, 5, 6, 5, 6, 5, 6],
+    rem: [1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 3, 2],
+    awake: [2, 3, 2, 3, 2, 3, 2, 3, 2, 3, 2, 3]
+  };
+};
+const now = new Date();
 const generateSleepData = () => {
   return Array.from({ length: 24 }, () => Math.floor(Math.random() * 10));
 };
 
-const now = new Date();
-
 
 const Page = () => {
 
+  const sleepStages = generateSleepStagesData();
   const sleepData = generateSleepData();
 
   return (
@@ -38,19 +50,11 @@ const Page = () => {
 
             <Grid item xs={12} lg={8}>
               <OverviewSales
-                chartSeries={[
-                  {
-                    name: 'Sleep',
-                    data: [0, 0, 0, 0, 0, 0, 0, 0, 10, 10, 10, 9]
-                  },
-                  {
-                    name: 'Activity',
-                    data: [0, 0, 0, 6, 2, 9, 9, 10, 11, 12, 13, 13]
-                  },
-                ]}
+                sleepStages={sleepStages}
                 sx={{ height: '100%' }}
               />
             </Grid>
+
 
             <Grid item xs={12} lg={4}>
               <SleepLevelChart data={sleepData} sx={{ height: '100%' }} />
@@ -58,7 +62,7 @@ const Page = () => {
           </Grid>
         </Container>
       </Box>
-
+      {/* 
       <Box
         component="main"
         sx={{
@@ -258,7 +262,7 @@ const Page = () => {
             </Grid>
           </Grid>
         </Container>
-      </Box>
+      </Box> */}
 
     </>
 
