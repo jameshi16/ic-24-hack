@@ -28,7 +28,7 @@ class Forecaster:
         headers = {
             "accept": "application/json",
             "content-type": "application/json",
-            "authorization": "Bearer EUgTS3aD7SHp17xrxLHj2lxV2r43Ti794R6pK02uTvpKu84UsU4ZxvQADblDqrB2FY4hATH9t0rpvPTm3qODqsWQsEeSTgofY3AxuPXKehJddMPT997K7kRu9jgrTvIUIXdW2tRusjmSGELLtGedeKdGs10cpqRDwh0VGesN0Yt7IjdCbcMpHrUfhq9z5xTr8XZrczQYD6ruesKzFG0j4poi48IoFp2xnjjbvCuN8Ii2i14xH69bTUnfAex4LjcC"
+            "authorization": "insert api key"
 
         }
 
