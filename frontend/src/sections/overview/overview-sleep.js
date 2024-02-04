@@ -16,16 +16,23 @@ const useSleepChartOptions = () => {
             },
             type: 'line'
         },
+
         stroke: {
             curve: 'smooth',
             width: 2
         },
         colors: [theme.palette.primary.main],
         xaxis: {
-            tickAmount: 13,
-            type: 'category',
-            categories: Array.from({ length: 24 }, (_, i) => `${i}:00`),
-            tickPlacement: 'on'
+            categories: [], // Empty categories array
+            labels: {
+                show: false // Hide labels
+            },
+            axisTicks: {
+                show: false // Hide axis ticks
+            },
+            axisBorder: {
+                show: false // Hide the axis border
+            }
         },
         yaxis: {
             labels: {
@@ -52,7 +59,7 @@ const SleepLevelChart = ({ data, sx }) => {
 
     return (
         <Card sx={sx}>
-            <CardHeader title="Aggregated Sleep Level Over 24 Hours" />
+            <CardHeader title="Aggregated Sleep Level" />
             <CardContent>
                 <Chart
                     options={chartOptions}

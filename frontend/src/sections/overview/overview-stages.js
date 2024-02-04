@@ -141,7 +141,7 @@ export const OverviewSales = ({ sleepStages, sx }) => {
             Sync
           </Button>
         )}
-        title="Sleep Stages"
+        title="Soldiers' Sleep Stages"
       />
       <CardContent>
         <Chart

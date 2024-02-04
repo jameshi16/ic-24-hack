@@ -20,10 +20,10 @@ import SleepLevelChart from 'src/sections/overview/overview-sleep';
 const generateSleepStagesData = () => {
 
   return {
-    deep: [3, 2, 2, 1, 4, 3, 2, 3, 2, 3, 4, 3],
-    light: [5, 6, 5, 4, 5, 6, 5, 6, 5, 6, 5, 6],
+    deep: [3, 2, 2, 1, 4, 3, 2, 3, 2, 3, 1, 3],
+    light: [3, 3, 2, 2, 2, 3, 2, 1, 2, 3, 2, 2],
     rem: [1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 3, 2],
-    awake: [2, 3, 2, 3, 2, 3, 2, 3, 2, 3, 2, 3]
+    awake: [1, 1.3, 1.5, 1.4, 1, 1.6, 2, 1, 1.2, 1.8, 1, 1.5]
   };
 };
 const now = new Date();
