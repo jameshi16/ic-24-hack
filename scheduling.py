@@ -26,7 +26,7 @@ class Platoon:
             wellbeing_sums[curr_idx] = -1
         self.queue = self.queue[1:]
         self.queue.append(idx_soldier)
-        #print(self.queue)
+        # print(self.queue)
         return idx_soldier
 
 # dict0 = {"wellbeing": [[1,2,2,1,4,5,1,2,4,3,2,1,1,2,2,1,4,5,1,2,4,3,2,1], [41,8,2,8,4,5,1,2,8,3,2,1,8,2,2,1,4,8,1,2,4,8,2,1],
