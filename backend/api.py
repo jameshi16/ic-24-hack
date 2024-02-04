@@ -7,13 +7,14 @@ from fetch import Fetcher
 from scheduling import Scheduler
 import json
 import numpy as np
+from forecast import Forecaster
 
 app = FastAPI()
 n = 8
 
 fetcher = Fetcher()
 wellbeings, ids = [], []
-for i in range(6):
+for i in range(n):
     calc = WellnessCalc(fetcher.activity_cleanup(f"{i}"),
                         fetcher.sleep_cleanup(f"{i}"))
     activity, sleep = calc.get_activity_score(), calc.get_sleep_scores()
@@ -69,3 +70,11 @@ def set_task(task: dict):
 @app.get("/tasks")
 def get_tasks():
     return tasks
+
+@app.get("/forecast")
+def forecast():
+    data = dict0["wellbeing"][0]
+    forecaster = Forecaster(data)
+    actual, forecast = forecaster.forecast()
+
+    return {"actual":actual, "forecast":forecast}
