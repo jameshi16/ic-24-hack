@@ -1,7 +1,6 @@
 from datetime import datetime, timedelta
-import pytz
 
-class ExtendedWellnessScoreCalculator:
+class WellnessCalc:
     def __init__(self, activity_data, sleep_data):
         self.activity_data = activity_data
         self.sleep_data = sleep_data
@@ -15,7 +14,7 @@ class ExtendedWellnessScoreCalculator:
     def calculate_activity_score(self, avg_hr):
         return avg_hr / 10  # Example normalization
 
-    def get_extended_hourly_activity_scores(self):
+    def get_activity_score(self):
         hourly_scores = [0] * 100  # Initialize a list for 100 hours with scores set to 0
         current_date = self.start_date
 
@@ -37,7 +36,7 @@ class ExtendedWellnessScoreCalculator:
         score = (light_time * 0.25 + deep_time * 0.4 + rem_time * 0.35) / 480 * 10  # Normalize to a scale of 1-10
         return round(score, 1)
 
-    def get_extended_hourly_sleep_scores(self):
+    def get_sleep_scores(self):
         hourly_scores = [0] * 100  # Initialize a list for 100 hours with scores set to 0
         current_date = self.start_date
 
@@ -55,7 +54,7 @@ class ExtendedWellnessScoreCalculator:
 
         return hourly_scores
     
-    def calculate_overall_score(self, activity_scores, sleep_scores, n):
+    def get_overall_score(self, activity_scores, sleep_scores, n):
         combined_scores = [activity + sleep for activity, sleep in zip(activity_scores, sleep_scores)]
 
         overall_scores = []
@@ -90,12 +89,12 @@ if __name__ == "__main__":
         ]
     }
 
-calculator = ExtendedWellnessScoreCalculator(activity_data, sleep_data)
-activity_scores = calculator.get_extended_hourly_activity_scores()
-sleep_scores = calculator.get_extended_hourly_sleep_scores()
+# calculator = WellnessCalc(activity_data, sleep_data)
+# activity_scores = calculator.get_activity_score()
+# sleep_scores = calculator.get_sleep_scores()
 
-overall = calculator.calculate_overall_score(activity_scores, sleep_scores, 4)
+# overall = calculator.get_overall_score(activity_scores, sleep_scores, 4)
 
-# print(activity_scores, sleep_scores)
+# # print(activity_scores, sleep_scores)
 
-print(overall)
+# print(overall)

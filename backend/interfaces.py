@@ -7,7 +7,7 @@ class ScoreResponse:
     overall: list[int]
     activity: list[int]
     sleep: list[int]
-    fitness: list[int]
+    # fitness: list[int]
 
 
 @dataclass_json
