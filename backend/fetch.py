@@ -6,7 +6,6 @@ uri = "mongodb+srv://georgeghetiu:ichack123@cluster0.b1jbmqs.mongodb.net/?retryW
 
 
 class Fetcher:
-    
     def __init__(self) -> None:
         self.client = MongoClient(uri)
 
@@ -17,8 +16,8 @@ class Fetcher:
             print(e)
 
         self.db = self.client["Cluster0"]
-        self.sleep_collection = self.db["sleep"]
-        self.activity_collection = self.db["activity"]
+        self.sleep_collection = self.db["test_sleep"]
+        self.activity_collection = self.db["test_activity"]
 
 
     def sleep_cleanup(self, user_id):
@@ -58,13 +57,13 @@ class Fetcher:
 
             metadata = doc.get('metadata', {})
             heart_rate_data = doc.get('heart_rate_data', {}).get('summary', {})
-            
+
             start_time = metadata.get('start_time', '')
             end_time = metadata.get('end_time', '')
             avg_hr = heart_rate_data.get('avg_hr_bpm', 100)
-            avg_hrv = -1  # Placeholder as this data is not available in the sample
+            avg_hrv = heart_rate_data.get('avg_hrv', 0)
             power = doc.get('power_data', {}).get('avg_watts', 0)
-            vo2_max = -1  # Placeholder as this data is not available in the sample
+            vo2_max = heart_rate_data.get('vo2_max', 0)
 
             transformed_data["activities"].append({
                 "start_time": start_time,

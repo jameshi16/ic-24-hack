@@ -53,7 +53,7 @@ class WellnessCalc:
                 start_time += timedelta(hours=1)
 
         return hourly_scores
-    
+
     def get_overall_score(self, activity_scores, sleep_scores, n):
         combined_scores = [activity + sleep for activity, sleep in zip(activity_scores, sleep_scores)]
 
@@ -72,29 +72,28 @@ class WellnessCalc:
 # Executing the full class definition with the test data
 if __name__ == "__main__":
     activity_data = {
-        'user_id': 'test1', 
+        'user_id': 'test1',
         'activities': [
-            {'start_time': '2024-02-02T18:04:04.511000+00:00', 'end_time': '2024-02-03T01:06:04.511000+00:00', 'avg_hr': 62, 'avg_hrv': 40, 'power': 0, 'vo2_max': 50}, 
-            {'start_time': '2024-02-03T23:27:26.819000+00:00', 'end_time': '2024-02-04T07:26:26.819000+00:00', 'avg_hr': 71, 'avg_hrv': 35, 'power': 0, 'vo2_max': 55}, 
+            {'start_time': '2024-02-02T18:04:04.511000+00:00', 'end_time': '2024-02-03T01:06:04.511000+00:00', 'avg_hr': 62, 'avg_hrv': 40, 'power': 0, 'vo2_max': 50},
+            {'start_time': '2024-02-03T23:27:26.819000+00:00', 'end_time': '2024-02-04T07:26:26.819000+00:00', 'avg_hr': 71, 'avg_hrv': 35, 'power': 0, 'vo2_max': 55},
             {'start_time': '2024-02-03T23:27:55.977000+00:00', 'end_time': '2024-02-04T06:48:55.977000+00:00', 'avg_hr': 70, 'avg_hrv': 42, 'power': 0, 'vo2_max': 60}
         ]
     }
 
     sleep_data = {
-        'user_id': 'test1', 
+        'user_id': 'test1',
         'durations': [
-            {'start_time': '2024-02-02T18:04:04.511000+00:00', 'light_time': 196.18959306234333, 'deep_time': 386.7161320329825, 'rem_time': 233.7760460387461, 'tot_time': 328.10009556834797}, 
-            {'start_time': '2024-02-03T23:27:26.819000+00:00', 'light_time': 125.92007716252662, 'deep_time': 383.80624773661447, 'rem_time': 304.448456937741, 'tot_time': 99.73084341429514}, 
+            {'start_time': '2024-02-02T18:04:04.511000+00:00', 'light_time': 196.18959306234333, 'deep_time': 386.7161320329825, 'rem_time': 233.7760460387461, 'tot_time': 328.10009556834797},
+            {'start_time': '2024-02-03T23:27:26.819000+00:00', 'light_time': 125.92007716252662, 'deep_time': 383.80624773661447, 'rem_time': 304.448456937741, 'tot_time': 99.73084341429514},
             {'start_time': '2024-02-04T23:27:55.977000+00:00', 'light_time': 328.0097329042788, 'deep_time': 294.7115028627807, 'rem_time': 314.3028589305899, 'tot_time': 326.41072541539177}
         ]
     }
 
-# calculator = WellnessCalc(activity_data, sleep_data)
-# activity_scores = calculator.get_activity_score()
-# sleep_scores = calculator.get_sleep_scores()
+    calculator = WellnessCalc(activity_data, sleep_data)
+    activity_scores = calculator.get_activity_score()
+    sleep_scores = calculator.get_sleep_scores()
 
-# overall = calculator.get_overall_score(activity_scores, sleep_scores, 4)
+    overall = calculator.get_overall_score(activity_scores, sleep_scores, 4)
 
-# # print(activity_scores, sleep_scores)
-
-# print(overall)
+    print(activity_scores, sleep_scores)
+    print(overall)
