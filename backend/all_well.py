@@ -52,10 +52,13 @@ class WellnessCalc:
                         hourly_scores[int(hour_index)] = score
                 start_time += timedelta(hours=1)
 
-        return hourly_scores
+        max_score = max(hourly_scores)
+        return [round(h / max_score, 1) for h in hourly_scores]
 
     def get_overall_score(self, activity_scores, sleep_scores, n):
-        combined_scores = [activity + sleep for activity, sleep in zip(activity_scores, sleep_scores)]
+        max_act = max(activity_scores)
+        max_sleep = max(sleep_scores)
+        combined_scores = [activity / max_act + sleep / max_sleep for activity, sleep in zip(activity_scores, sleep_scores)]
 
         overall_scores = []
         length = len(combined_scores)

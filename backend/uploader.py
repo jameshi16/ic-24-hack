@@ -169,9 +169,9 @@ if __name__ == "__main__":
 
     for i in range(10):
         user_id = f'{i}'
-        sleep_nights = mongo_client.generate_sleep('2022-01-01', 7)
+        sleep_nights = mongo_client.generate_sleep('2023-02-01', 7)
         mongo_client.insert_needed_sleep(mongo_client.test_sleep, user_id, sleep_nights)
 
         # Generate and insert activity data
-        activities = mongo_client.generate_activity('2022-01-01', 7, sleep_nights)
+        activities = mongo_client.generate_activity('2022-02-01', 7, sleep_nights)
         mongo_client.insert_needed_activity(mongo_client.test_activity, user_id, activities)
