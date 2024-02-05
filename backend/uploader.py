@@ -4,7 +4,7 @@ import json
 import random
 from datetime import datetime, timedelta
 
-uri = "mongodb+srv://georgeghetiu:ichack123@cluster0.b1jbmqs.mongodb.net/?retryWrites=true&w=majority"
+uri = "mongodb+srv://<user>:<pass>@cluster0.b1jbmqs.mongodb.net/?retryWrites=true&w=majority"
 
 class MongoUploader:
     def __init__(self) -> None:
